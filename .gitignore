@@ -18,5 +18,5 @@ cov-test/
 cov-unit/
 coverage/
 
-examples/typescript/*.js
-examples/typescript/*.js.map
+examples/basic-express-typescript/*.js
+examples/basic-express-typescript/*.js.map
