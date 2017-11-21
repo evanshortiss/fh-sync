@@ -2,14 +2,16 @@ language: node_js
 sudo: required
 node_js:
   - "0.10"
+  - "4"
   - "4.4.3"
+  - "6"
+  - "8"
 services:
   - docker
 before_install:
   - sudo apt-get update
   - sudo apt-get install --assume-yes apache2-utils
   - npm install -g npm@2.13.5
-  - npm install -g grunt-cli
   - npm config set strict-ssl false
 install: npm install
 env:

@@ -17,3 +17,6 @@ dump.rdb
 cov-test/
 cov-unit/
 coverage/
+
+examples/typescript/*.js
+examples/typescript/*.js.map

@@ -1,0 +1,25 @@
+{
+  "name": "basic-express-typescript",
+  "version": "0.0.1",
+  "description": "Example of using TypeScript with fh-sync",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node server.js"
+  },
+  "author": "Evan Shortiss <evanshortiss@gmail.com> (http://evanshortiss.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "~3.5.1",
+    "body-parser": "~1.18.2",
+    "cors": "~2.8.4",
+    "express": "~4.16.2"
+  },
+  "devDependencies": {
+    "@types/bluebird": "~3.5.18",
+    "@types/body-parser": "~1.16.8",
+    "@types/cors": "~2.8.3",
+    "@types/express": "~4.0.39",
+    "typescript": "~2.6.1"
+  }
+}

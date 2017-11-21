@@ -78,12 +78,11 @@ Before running tests do:
 
 ```
 npm install
-npm install -g grunt-cli
 ```
 
-Then to run the tests use ```npm test```
+Then to run the tests use `npm test`
 
-## Cordova client template
+## Cordova Client Template
 
 The [Feedhenry Cordova Sync Template](https://github.com/feedhenry-templates/feedhenry-cordova-sync-app) can be used to create client application talking to the sync server.
 

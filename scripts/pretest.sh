@@ -13,4 +13,5 @@ docker pull mongo:$MONGODB_VERSION
 docker rm -f $(docker ps -a -q  --filter name=mongodb-fh-mbaas-api)
 docker run -d -p 127.0.0.1:27017:27017 --name mongodb-fh-mbaas-api mongo:$MONGODB_VERSION mongod --smallfiles
 #give it some time to complete starting
+echo "waiting for services to start..."
 sleep 30s
