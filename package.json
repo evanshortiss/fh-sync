@@ -3,6 +3,12 @@
   "version": "1.0.14",
   "description": "FeedHenry Data Synchronization Server",
   "main": "fh-sync.js",
+  "files": [
+    "fh-sync.d.ts",
+    "fh-sync.js",
+    "lib/",
+    "README"
+  ],
   "dependencies": {
     "async": "2.1.5",
     "backoff": "2.5.0",
