@@ -51,9 +51,6 @@ declare module SyncCloud {
        * Can be used by other modules to create pre-built sync compliant handlers.
        */
       namespace HandlerFunctions {
-          /**
-           * @param dataset - THE THING
-           */
           type Create = (dataset: string, data: Object, metaData: Object, done: StandardCb<HandlerResults.Create>) => void
           type Read = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Read>) => void
           type Update = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Update>) => void
