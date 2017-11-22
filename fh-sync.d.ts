@@ -51,6 +51,9 @@ declare module SyncCloud {
        * Can be used by other modules to create pre-built sync compliant handlers.
        */
       namespace HandlerFunctions {
+          /**
+           * @param dataset - THE THING
+           */
           type Create = (dataset: string, data: Object, metaData: Object, done: StandardCb<HandlerResults.Create>) => void
           type Read = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Read>) => void
           type Update = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Update>) => void
@@ -186,16 +189,21 @@ declare module SyncCloud {
           metaData: any;
       }
       /**
-       * Connect sync server to mongo and redis.
+       * Connect sync server to mongo and redis. Returns the MongoDB and Redis clients being used internally.
        *
-       * Returns the MongoDB and Redis clients being used internally.
+       * @param mongoDBConnectionUrl - Unique id of the dataset (usually collection, table in your database)
+       * @param mongoDBConnectionOption - Connection options for the MongoDB driver
+       * @param redisUrl - Redis connection URL
+       * @param callback - Callback that will be invoked once connections are setup
        */
       function connect(mongoDBConnectionUrl: string, mongoDBConnectionOption: any, redisUrl: string, callback: (err: any, mongoDbClient?: any, redisClient?: any) => void): void;
 
       /**
-       * Initialize sync for specific dataset.
+       * Initialize sync for specific dataset. The passed datasetId must be a unique string.
        *
-       * The passed datasetId must be a unique string.
+       * @param datasetId - Unique name of the dataset to initialise
+       * @param options - Specific options to apply to this dataset
+       * @param callback - Callback that will be invoked once initialisation is complete
        */
       function init(datasetId: string, options: SyncInitOptions, callback: StandardCb<void>): void;
 
@@ -204,146 +212,198 @@ declare module SyncCloud {
        *
        * Supported operations are 'sync', 'syncRecords', 'listCollisions', 'removeCollision' and should be passed as a
        * "fn" key in the options object.
+       *
+       * @param datasetId - The dataset to invoke the operation on
+       * @param options - Options to pass to the invocation
+       * @param callback - Function that will receive the invocation results
        */
       function invoke(datasetId: string, options: InvokeOptions, callback: (err: any, result: any) => void): void;
 
       /**
-       * Stop sync loop for the given datasetId.
+       * Stop sync loop for the given datasetId. Invokes the passed callback once all operations are stopped.
        *
-       * Invokes the passed callback once all operations are stopped.
+       * @param datasetId - The dataset to stop syncing
+       * @param onStop - Callback to invoke once operations have stopped
        */
       function stop(datasetId: string, onStop: NoRespCb): void;
 
       /**
-       * Stop sync loop for all datasets.
+       * Stop sync loop for all datasets. Invokes the passed callback once all operations are stopped.
        *
-       * Invokes the passed callback once all operations are stopped.
+       * @param onStop - Callback to invoke once operations have stopped
        */
       function stopAll(onStop: StandardCb<string[]>): void;
 
       /**
        * Provide a custom list implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onList - Implementation of the handler
        */
       function handleList(datasetId: string, onList: HandlerFunctions.List): void;
 
       /**
        * Provide a custom implementation of the list operation for all datasets
+       *
+       * @param onList - Implementation of the handler
        */
       function globalHandleList(onList: HandlerFunctions.List): void;
 
       /**
        * Provide a custom create implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onCreate - Implementation of the handler
        */
       function handleCreate(datasetId: string, onCreate: HandlerFunctions.Create): void;
 
       /**
        * Provide a custom implementation of the create operation for all datasets
+       *
+       * @param onCreate - Implementation of the handler
        */
       function globalHandleCreate(onCreate: HandlerFunctions.Create): void;
 
       /**
        * Provide a custom read implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onRead - Implementation of the handler
        */
       function handleRead(datasetId: string, onRead: HandlerFunctions.Read): void;
 
       /**
        * Provide a custom implementation of the read operation for all datasets.
+       *
+       * @param onRead - Implementation of the handler
        */
       function globalHandleRead(onRead: HandlerFunctions.Read): void;
 
       /**
        * Provide a custom update implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onUpdate - Implementation of the handler
        */
       function handleUpdate(datasetId: string, onUpdate: HandlerFunctions.Update): void;
 
       /**
-       * Provide a custom implementation of the update operation for all datasets.
+       * Provide a custom implementation of the update handler for all datasets.
+       *
+       * @param onUpdate - Implementation of the handler
        */
       function globalHandleUpdate(onUpdate: HandlerFunctions.Update): void;
 
       /**
        * Provide a custom delete implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onDelete - Implementation of the handler
        */
       function handleDelete(datasetId: string, onDelete: HandlerFunctions.Delete): void;
 
       /**
-       * Provide a custom implementation of the delete operation for all datasets.
+       * Provide a custom implementation of the delete handler for all datasets.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onDelete - Implementation of the handler
        */
       function globalHandleDelete(onDelete: HandlerFunctions.Delete): void;
 
       /**
        * Provide a custom collision handler implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onCollision - Implementation of the handler
        */
       function handleCollision(datasetId: string, onCollision: HandlerFunctions.Collision): void;
 
       /**
        * Provide a custom implementation of the collision handler for all datasets.
+       *
+       * @param onCollision - Implementation of the handler
        */
       function globalHandleCollision(onCollision: HandlerFunctions.Collision): void;
 
       /**
        * Provide a custom collision list handler implementation for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onList - Implementation of the handler
        */
       function listCollisions(datasetId: string, onList: HandlerFunctions.ListCollisions): void;
 
       /**
        * Provide a custom implementation of the list collision handler for all datasets.
+       *
+       * @param onList - Implementation of the handler
        */
       function globalListCollisions(onList: HandlerFunctions.ListCollisions): void;
 
       /**
        * Provide a custom collision removal handler for the specified dataset.
+       *
+       * @param datasetId - The dataset to apply the given handler to
+       * @param onRemove - Implementation of the handler
        */
       function removeCollision(datasetId: string, onRemove: HandlerFunctions.RemoveCollision): void;
 
       /**
-       * Allows developers to provide a request interceptor for the given datasetId.
-       *
-       * Facilitates performing custom operations prior to invoking the required sync method.
+       * Allows developers to provide a request interceptor for the given datasetId. Facilitates performing custom
+       * operations prior to invoking the required sync method.
        *
        * Useful for performing authorisation checks, logging, etc.
+       *
+       * @param datasetId - The dataset to apply the given interceptor to
+       * @param onIntercept - Implementation of the interceptor
        */
       function interceptRequest(datasetId: string, onIntercept: HandlerFunctions.Interceptor): void;
 
       /**
-       * Allows developers to provide a response interceptor for the given datasetId.
+       * Allows developers to provide a response interceptor for the given datasetId. Facilitates performing custom
+       * operations after internal sync operations have completed.
        *
-       * Facilitates performing custom operations after internal sync operations have completed.
+       * @param datasetId - The dataset to apply the given interceptor to
+       * @param onIntercept - Implementation of the interceptor
        */
       function interceptResponse(datasetId: string, onIntercept: HandlerFunctions.Interceptor): void;
 
       /**
        * Override global options utilised by the library.
+       * @param config - The configuration overrides to apply
        */
       function setConfig(config: SyncGlobalOptions): void;
 
       /**
-       * Allows developers to provide a global request interceptor.
+       * Allows developers to provide a global request interceptor. Facilitates performing custom operations prior to
+       * invoking the required sync method. Useful for performing authorisation checks, logging, etc.
        *
-       * Facilitates performing custom operations prior to invoking the required sync method.
-       *
-       * Useful for performing authorisation checks, logging, etc.
+       * @param onIntercept - The function to use as interceptor for all collection requests
        */
       function globalInterceptRequest(onIntercept: HandlerFunctions.Interceptor): void;
 
       /**
-       * Allows developers to provide a response interceptor for all datasets.
+       * Allows developers to provide a response interceptor for all datasets. Facilitates performing custom operations
+       * after internal sync operations have completed.
        *
-       * Facilitates performing custom operations after internal sync operations have completed.
+       * @param onIntercept - The function to use as interceptor for all collection resposnes
        */
       function globalInterceptResponse(onIntercept: HandlerFunctions.Interceptor): void;
 
       /**
-       * Sets a custom global hashing method.
+       * Sets a custom global hashing method. This is used to determine if a difference exists between the previous and
+       * current state of a record.
        *
-       * This is used to determine if a difference exists between the previous and current state of a record.
+       * @param hashFunction - The custom hashing implementation to use for all datasets
        */
       function setGlobalHashFn(datasetId: string, hashFunction: HandlerFunctions.Hash): void;
 
       /**
-       * Sets a custom hashing method for the given datasetId.
+       * Sets a custom hashing method for the given datasetId. This is used to determine if a difference exists between
+       * the previous and current state of a record.
        *
-       * This is used to determine if a difference exists between the previous and current state of a record.
+       * @param datasetId - The custom hashing implementation to use for the given datasetId
+       * @param hashFunction - The custom hashing implementation to use for the given datasetId
        */
       function setRecordHashFn(datasetId: string, hashFunction: HandlerFunctions.Hash): void;
   }

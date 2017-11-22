@@ -15,7 +15,6 @@ const DATASET_OPTS = {
   syncFrequency: 10 // seconds
 };
 
-
 interface Query {
   username: string
 }
