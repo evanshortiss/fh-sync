@@ -5,6 +5,11 @@
 declare module SyncCloud {
 
       /**
+       * Backoff strategies that can be passed to workers
+       */
+      type WorkerBackoffStrategy = 'fib'|'exp'
+
+      /**
        * Valid actions (the "fn" param) that can be passed to sync.invoke
        */
       type InvokeAction = 'sync'|'syncRecords'|'listCollisions'|'removeCollision'
@@ -51,14 +56,14 @@ declare module SyncCloud {
        * Can be used by other modules to create pre-built sync compliant handlers.
        */
       namespace HandlerFunctions {
-          type Create = (dataset: string, data: Object, metaData: Object, done: StandardCb<HandlerResults.Create>) => void
-          type Read = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Read>) => void
-          type Update = (dataset: string, uid: string, metaData: Object, done: StandardCb<HandlerResults.Update>) => void
-          type Delete = (dataset: string, queryParams: Object, metaData: Object, done: StandardCb<HandlerResults.Delete>) => void
-          type List = (dataset: string, queryParams: Object, metaData: Object, done: StandardCb<HandlerResults.List>) => void
-          type Collision = (datasetId: string, hash: string, timestamp: number, uid: string, pre: Object, post: Object, metaData: Object, callback: StandardCb<any>) => void
-          type ListCollisions = (datasetId: string, metaData: Object, callback: StandardCb<{ [hash: string]: Object }>) => void
-          type RemoveCollision = (datasetId: string, collision_hash: string, metaData: Object, callback: StandardCb<any>) => void
+          type Create = (dataset: string, data: Object, metaData: any, done: StandardCb<HandlerResults.Create>) => void
+          type Read = (dataset: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Read>) => void
+          type Update = (dataset: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Update>) => void
+          type Delete = (dataset: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.Delete>) => void
+          type List = (dataset: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.List>) => void
+          type Collision = (datasetId: string, hash: string, timestamp: number, uid: string, pre: Object, post: Object, metaData: any, callback: StandardCb<any>) => void
+          type ListCollisions = (datasetId: string, metaData: any, callback: StandardCb<{ [hash: string]: Object }>) => void
+          type RemoveCollision = (datasetId: string, collision_hash: string, metaData: any, callback: StandardCb<any>) => void
           type Interceptor = (datasetId: string, interceptorParams: SyncInterceptParams, callback: NoRespCb) => void
           type Hash = (datasetId: string, data: Object) => void
       }
@@ -128,7 +133,7 @@ declare module SyncCloud {
        * Example: {strategy: 'exp', max: 60*1000},
        */
       interface PendingWorkerBackoff {
-          strategy: string;
+          strategy?: WorkerBackoffStrategy;
           max: number;
       }
       /**
@@ -202,7 +207,7 @@ declare module SyncCloud {
        * @param options - Specific options to apply to this dataset
        * @param callback - Callback that will be invoked once initialisation is complete
        */
-      function init(datasetId: string, options: SyncInitOptions, callback: StandardCb<void>): void;
+      function init(datasetId: string, options: SyncInitOptions, callback: NoRespCb): void;
 
       /**
        * Internal method used to invoke sync methods. Should be used to handle json request from client.
@@ -214,7 +219,7 @@ declare module SyncCloud {
        * @param options - Options to pass to the invocation
        * @param callback - Function that will receive the invocation results
        */
-      function invoke(datasetId: string, options: InvokeOptions, callback: (err: any, result: any) => void): void;
+      function invoke(datasetId: string, options: InvokeOptions, callback: StandardCb<any>): void;
 
       /**
        * Stop sync loop for the given datasetId. Invokes the passed callback once all operations are stopped.

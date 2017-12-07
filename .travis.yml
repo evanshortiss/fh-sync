@@ -1,11 +1,9 @@
 language: node_js
 sudo: required
 node_js:
-  - "0.10"
   - "4"
   - "4.4.3"
   - "6"
-  - "8"
 services:
   - docker
 before_install:
@@ -32,4 +30,3 @@ matrix:
       - npm install
       - npm link fh-mbaas-api
       - npm test
-      
