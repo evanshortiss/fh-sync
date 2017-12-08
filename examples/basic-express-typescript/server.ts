@@ -1,7 +1,7 @@
 
+import * as sync from './lib/sync'
+import syncRouter from './lib/route'
 import * as express from 'express'
-import * as sync from './sync'
-import syncRouter from './route'
 
 const app = express()
 
@@ -12,7 +12,7 @@ sync.init()
     process.exit(1)
   })
 
-function startApplicationServer (err: any) {
+function startApplicationServer(err: any) {
   if (err) {
     console.log('error starting sync server:')
     throw err
@@ -24,7 +24,7 @@ function startApplicationServer (err: any) {
   app.use('/sync', syncRouter)
 
   // Default route. Can be used to check application is up and running
-  app.get('/', (req, res) => {
+  app.get('/', (req: express.Request, res: express.Response) => {
     res.send('Sample application is running!')
   })
 

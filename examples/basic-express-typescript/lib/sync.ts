@@ -1,5 +1,5 @@
 
-import * as sync from '../../fh-sync'
+import * as sync from '../../../fh-sync'
 import * as Promise from 'bluebird'
 
 // Sync framework requires mongodb and redis to be running
