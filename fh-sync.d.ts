@@ -65,7 +65,7 @@ declare module SyncCloud {
           type ListCollisions = (datasetId: string, metaData: any, callback: StandardCb<{ [hash: string]: Object }>) => void
           type RemoveCollision = (datasetId: string, collision_hash: string, metaData: any, callback: StandardCb<any>) => void
           type Interceptor = (datasetId: string, interceptorParams: SyncInterceptParams, callback: NoRespCb) => void
-          type Hash = (datasetId: string, data: Object) => void
+          type Hash = (datasetId: string, data: any) => string
       }
 
       /**
