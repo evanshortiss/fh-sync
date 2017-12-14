@@ -56,16 +56,17 @@ declare module SyncCloud {
        * Can be used by other modules to create pre-built sync compliant handlers.
        */
       namespace HandlerFunctions {
-          type Create = (dataset: string, data: Object, metaData: any, done: StandardCb<HandlerResults.Create>) => void
-          type Read = (dataset: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Read>) => void
-          type Update = (dataset: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Update>) => void
-          type Delete = (dataset: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.Delete>) => void
-          type List = (dataset: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.List>) => void
+          type Create = (datasetId: string, data: Object, metaData: any, done: StandardCb<HandlerResults.Create>) => void
+          type Read = (datasetId: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Read>) => void
+          type Update = (datasetId: string, uid: string, metaData: any, done: StandardCb<HandlerResults.Update>) => void
+          type Delete = (datasetId: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.Delete>) => void
+          type List = (datasetId: string, queryParams: any, metaData: any, done: StandardCb<HandlerResults.List>) => void
           type Collision = (datasetId: string, hash: string, timestamp: number, uid: string, pre: Object, post: Object, metaData: any, callback: StandardCb<any>) => void
           type ListCollisions = (datasetId: string, metaData: any, callback: StandardCb<{ [hash: string]: Object }>) => void
           type RemoveCollision = (datasetId: string, collision_hash: string, metaData: any, callback: StandardCb<any>) => void
           type Interceptor = (datasetId: string, interceptorParams: SyncInterceptParams, callback: NoRespCb) => void
           type Hash = (data: any) => string
+          type GlobalHash = (hashes: Array<string>) => string
       }
 
       /**
@@ -398,7 +399,7 @@ declare module SyncCloud {
        *
        * @param hashFunction - The custom hashing implementation to use for all datasets
        */
-      function setGlobalHashFn(datasetId: string, hashFunction: HandlerFunctions.Hash): void;
+      function setGlobalHashFn(datasetId: string, hashFunction: HandlerFunctions.GlobalHash): void;
 
       /**
        * Sets a custom hashing method for the given datasetId. This is used to determine if a difference exists between
