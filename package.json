@@ -1,6 +1,6 @@
 {
   "name": "fh-sync",
-  "version": "1.1.0",
+  "version": "2.0.2",
   "description": "FeedHenry Data Synchronization Server",
   "main": "fh-sync.js",
   "files": [
@@ -10,30 +10,30 @@
     "README"
   ],
   "dependencies": {
-    "async": "2.1.5",
+    "async": "2.6.1",
     "backoff": "2.5.0",
-    "debug": "2.6.9",
+    "debug": "3.1.0",
     "fh-component-metrics": "2.7.0",
-    "mongodb": "2.1.18",
+    "fh-mongodb-queue": "3.3.0",
+    "mongodb": "2.2.33",
     "mongodb-lock": "0.4.0",
-    "mongodb-queue": "git+https://github.com/david-martin/mongodb-queue.git#ttl-index-01",
     "parse-duration": "0.1.1",
-    "redis": "2.6.5",
-    "underscore": "1.7.0"
+    "redis": "2.8.0",
+    "underscore": "1.9.1"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-cli": "~1.2.0",
-    "grunt-fh-build": "~0.5.0",
-    "grunt-mocha-test": "~0.13.2",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^1.2.0",
+    "grunt-fh-build": "^2.0.1",
+    "grunt-mocha-test": "^0.13.2",
     "istanbul": "0.2.14",
-    "jshint": "~2.5.2",
-    "mocha": "2.4.5",
-    "proxyquire": "1.4.0",
-    "sinon": "~1.17.5",
-    "typedoc": "~0.7.1",
-    "typescript": "~2.6.1",
-    "valid-url": "1.0.9"
+    "jshint": "^2.5.2",
+    "mocha": "^2.4.5",
+    "proxyquire": "^2.1.0",
+    "sinon": "^1.17.5",
+    "typedoc": "^0.12.0",
+     "typescript": "~2.6.1",
+    "valid-url": "^1.0.9"
   },
   "types": "fh-sync.d.ts",
   "scripts": {

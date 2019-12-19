@@ -1,9 +1,8 @@
 language: node_js
 sudo: required
 node_js:
-  - "4"
-  - "4.4.3"
-  - "6"
+  - 8
+  - 10
 services:
   - docker
 before_install:
@@ -20,9 +19,12 @@ script:
 matrix:
   include:
   # Include sync acceptance tests for node 4
-  - node_js: "4.4.3"
+  - node_js:
+      - 6
+      - 8
+      - 10
     services:
-    - docker
+      - docker
     script:
       - npm link
       - git clone https://github.com/feedhenry/sync-acceptance-testing.git
